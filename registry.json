@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "ctweb",
+  "homepage": "https://ctweb-shadcn.vercel.app",
+  "items": [
+    {
+      "name": "contact-form",
+      "type": "registry:block",
+      "title": "Contact Form",
+      "description": "A reusable contact form with name, email, phone, subject select, and message fields. Includes Zod validation, honeypot spam protection, loading states, success confirmation, and error handling via sonner toasts. Pairs with a /api/contact route for Resend email delivery.",
+      "dependencies": [
+        "zod",
+        "react-hook-form",
+        "@hookform/resolvers",
+        "sonner",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "textarea",
+        "card",
+        "form",
+        "select",
+        "separator",
+        "sonner"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/blocks/contact-form/contact-form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/contact-form/contact-form-engine.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/contact-form/contact-info.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/blocks/contact-form/contact-schema.ts",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
