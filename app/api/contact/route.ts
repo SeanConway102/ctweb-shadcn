@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { contactSchema } from "@/registry/new-york/blocks/contact-form/contact-schema"
+import { env } from "@/lib/env"
 
 export async function POST(request: Request) {
   try {
@@ -18,22 +19,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "ok" })
     }
 
-    // Send email via Resend (skip if no API key)
-    const resendKey = process.env.RESEND_API_KEY
-    if (!resendKey) {
-      console.warn(
-        "RESEND_API_KEY is not set — skipping email send. " +
-        "Add it to your environment variables to enable email delivery.",
-      )
-      return NextResponse.json({ message: "ok" })
-    }
-
-    const toEmail = process.env.CONTACT_TO_EMAIL ?? "hello@yourcompany.com"
-    const fromEmail = process.env.CONTACT_FROM_EMAIL ?? "onboarding@resend.dev"
-
     const emailPayload = {
-      from: fromEmail,
-      to: toEmail,
+      from: env.CONTACT_FROM_EMAIL,
+      to: env.CONTACT_TO_EMAIL,
       subject: `[Contact Form] ${subject} — ${name}`,
       reply_to: email,
       html: `
@@ -64,7 +52,7 @@ export async function POST(request: Request) {
     const resendRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${resendKey}`,
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(emailPayload),
